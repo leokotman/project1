@@ -9,15 +9,19 @@
       <h2>course goals</h2>
       <p>{{ courseGoal }}</p>
     </section>
-    <section>
+    <section class="profile_card">
       <h2>My name: {{myName}} </h2>
       <p>My age: {{ myAge }}</p>
       <p>{{ myAge + 5 }} in 5 years</p>
-      <p>Favourite random number: {{ Math.random() }}</p>
+      <p>Favourite random number: {{ favouriteRandomNumber }}</p>
       <div>
         <img :src="imgLink" alt="cool cat" width="300" />
       </div>
-      <input type="text" v-model="myName"/>
+      <input type="text" v-on:input="setName"/>
+      <form v-on:submit.prevent="unSubmitForm">
+        <input type="text" v-model="form">
+        <button>Unsubmit</button>
+      </form>
     </section>
   </div>
 </template>
@@ -32,9 +36,19 @@ export default {
       courseGoal: "Finish Vue Course",
       myName: "",
       myAge: 28,
+      favouriteRandomNumber: Math.random(),
       imgLink: "https://cdn.wallpapersafari.com/59/40/rvKmOG.jpg",
+      form: "",
     };
   },
+  methods: {
+    setName(event) {
+      this.myName = event.target.value;
+    },
+    unSubmitForm() {
+      alert("Form is (un)submitted! No page refresh. You typed: " + this.form);
+    }
+  }
 };
 </script>
 
@@ -48,7 +62,8 @@ export default {
   margin-top: 60px;
 }
 header,
-#user-goal {
+#user-goal,
+.profile_card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 3rem auto;
   border-radius: 10px;
@@ -78,4 +93,5 @@ h2 {
   min-height: 1rem;
   border-radius: 10px;
 }
+
 </style>
