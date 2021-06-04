@@ -29,7 +29,7 @@
       <button v-on:click="add(5)">Add 5</button>
       <button v-on:click="add(1)">Add 1</button>
       <button v-on:click="reset">Reset</button>
-      <p>Result: {{ resultMsg }}</p>
+      <p>Result: {{ result }}</p>
     </section>
   </div>
 </template>
@@ -58,16 +58,23 @@ export default {
         return this.name + " " + this.lastName;
       }
     },
+    result() {
+      if (this.resultNum < 37) {
+        return "Not there yet";
+      } else if (this.resultNum > 37) {
+        return "Too much";
+      } else {
+        return this.resultNum;
+      }
+    }
   },
   watch: {
-    resultNum() {
-      if (this.resultNum < 37) {
-        return this.resultMsg = "Not there yet";
-      } else if (this.resultNum > 37) {
-        return this.resultMsg = "Too much";
-      } else {
-        return this.resultMsg = this.resultNum;
-      }
+    // will work any time 'result' output changes
+    result(){
+      const objThis = this;
+      setTimeout(function () {
+        objThis.resultNum = 0;
+      }, 5000);
     }
   },
   methods: {
