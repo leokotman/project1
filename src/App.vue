@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <header>
       <h1>Vue course goals</h1>
     </header>
@@ -9,46 +7,87 @@
       <h2>course goals</h2>
       <p>{{ courseGoal }}</p>
     </section>
-    <section class="profile_card">
-      <h2>My name: {{myName}} </h2>
-      <p>My age: {{ myAge }}</p>
-      <p>{{ myAge + 5 }} in 5 years</p>
+    <section class="card">
+      <h2>My name: {{ fullName }}</h2>
+      <p>My age: {{ age }}</p>
+      <p>{{ age + 5 }} in 5 years</p>
       <p>Favourite random number: {{ favouriteRandomNumber }}</p>
       <div>
         <img :src="imgLink" alt="cool cat" width="300" />
       </div>
-      <input type="text" v-on:input="setName"/>
+      <h3>Set name</h3>
+      <input type="text" v-on:input="setName" />
+      <h3>Set Last name</h3>
+      <input type="text" v-on:input="setLastName" />
       <form v-on:submit.prevent="unSubmitForm">
-        <input type="text" v-model="form">
+        <input type="text" v-model="form" />
         <button>Unsubmit</button>
       </form>
+    </section>
+    <section class="card">
+      <h3>Counting to 37</h3>
+      <button v-on:click="add(5)">Add 5</button>
+      <button v-on:click="add(1)">Add 1</button>
+      <button v-on:click="reset">Reset</button>
+      <p>Result: {{ resultMsg }}</p>
     </section>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: "App",
   data() {
     return {
       courseGoal: "Finish Vue Course",
-      myName: "",
-      myAge: 28,
+      name: "",
+      lastName: "",
+      age: 28,
       favouriteRandomNumber: Math.random(),
       imgLink: "https://cdn.wallpapersafari.com/59/40/rvKmOG.jpg",
       form: "",
+      resultNum: 0,
+      resultMsg: ""
     };
+  },
+  computed: {
+    fullName() {
+      if (this.name === "" || this.lastName === "") {
+        return "";
+      } else {
+        return this.name + " " + this.lastName;
+      }
+    },
+  },
+  watch: {
+    resultNum() {
+      if (this.resultNum < 37) {
+        return this.resultMsg = "Not there yet";
+      } else if (this.resultNum > 37) {
+        return this.resultMsg = "Too much";
+      } else {
+        return this.resultMsg = this.resultNum;
+      }
+    }
   },
   methods: {
     setName(event) {
-      this.myName = event.target.value;
+      this.name = event.target.value;
+    },
+    setLastName(event) {
+      this.lastName = event.target.value;
     },
     unSubmitForm() {
       alert("Form is (un)submitted! No page refresh. You typed: " + this.form);
+    },
+    add(number) {
+      console.log("added" + number);
+      this.resultNum += number;
+    },
+    reset() {
+      this.resultNum = 0;
     }
-  }
+  },
 };
 </script>
 
@@ -63,7 +102,7 @@ export default {
 }
 header,
 #user-goal,
-.profile_card {
+.card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 3rem auto;
   border-radius: 10px;
@@ -93,5 +132,4 @@ h2 {
   min-height: 1rem;
   border-radius: 10px;
 }
-
 </style>
