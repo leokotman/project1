@@ -3,11 +3,15 @@
     <header>
       <h1>Vue course goals</h1>
     </header>
-    <section id="user-goal">
+    <section
+      id="user-goal"
+      v-on:click="selectCard('A')"
+      v-bind:class="{ card: true, cardActive: cardASelected }"
+    >
       <h2>course goals</h2>
       <p>{{ courseGoal }}</p>
     </section>
-    <section class="card">
+    <section v-bind:class="{ card: true, cardActive: cardBSelected }" v-on:click="selectCard('B')">
       <h2>My name: {{ fullName }}</h2>
       <p>My age: {{ age }}</p>
       <p>{{ age + 5 }} in 5 years</p>
@@ -24,7 +28,7 @@
         <button>Unsubmit</button>
       </form>
     </section>
-    <section class="card">
+    <section v-bind:class="{ card: true, cardActive: cardCSelected }" v-on:click="selectCard('C')">
       <h3>Counting to 37</h3>
       <button v-on:click="add(5)">Add 5</button>
       <button v-on:click="add(1)">Add 1</button>
@@ -47,7 +51,10 @@ export default {
       imgLink: "https://cdn.wallpapersafari.com/59/40/rvKmOG.jpg",
       form: "",
       resultNum: 0,
-      resultMsg: ""
+      resultMsg: "",
+      cardASelected: false,
+      cardBSelected: false,
+      cardCSelected: false,
     };
   },
   computed: {
@@ -66,16 +73,16 @@ export default {
       } else {
         return this.resultNum;
       }
-    }
+    },
   },
   watch: {
     // will work any time 'result' output changes
-    result(){
+    result() {
       const objThis = this;
-      setTimeout(function () {
+      setTimeout(function() {
         objThis.resultNum = 0;
       }, 5000);
-    }
+    },
   },
   methods: {
     setName(event) {
@@ -93,7 +100,23 @@ export default {
     },
     reset() {
       this.resultNum = 0;
-    }
+    },
+    selectCard(card) {
+      console.log(`card ${card} selected`);
+      if (card === "A") {
+        this.cardASelected == false
+          ? (this.cardASelected = true)
+          : (this.cardASelected = false);
+      } else if (card === "B") {
+        this.cardBSelected == false
+          ? (this.cardBSelected = true)
+          : (this.cardBSelected = false);
+      } else {
+        this.cardCSelected == false
+          ? (this.cardCSelected = true)
+          : (this.cardCSelected = false);
+      }
+    },
   },
 };
 </script>
@@ -108,19 +131,22 @@ export default {
   margin-top: 60px;
 }
 header,
-#user-goal,
 .card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 3rem auto;
+  border: 2px dashed rgb(45, 202, 160);
   border-radius: 10px;
+  box-sizing: border-box;
   padding: 1rem;
   text-align: center;
   width: 90%;
   max-width: 40rem;
 }
-#user-goal {
-  border: 2px solid rgb(45, 202, 160);
+.cardActive {
+  border: 4px solid rgb(22, 95, 22);
+  background-color: antiquewhite;
 }
+
 header {
   color: white;
   background-color: rgb(45, 202, 160);
