@@ -5,13 +5,18 @@
     </header>
     <section
       id="user-goal"
+      class="card"
       v-on:click="selectCard('A')"
-      v-bind:class="{ card: true, cardActive: cardASelected }"
+      v-bind:class="{ cardActive: cardASelected }"
     >
       <h2>course goals</h2>
       <p>{{ courseGoal }}</p>
     </section>
-    <section v-bind:class="{ card: true, cardActive: cardBSelected }" v-on:click="selectCard('B')">
+    <section
+      class="card"
+      v-bind:class="{ cardActive: cardBSelected }"
+      v-on:click="selectCard('B')"
+    >
       <h2>My name: {{ fullName }}</h2>
       <p>My age: {{ age }}</p>
       <p>{{ age + 5 }} in 5 years</p>
@@ -28,7 +33,11 @@
         <button>Unsubmit</button>
       </form>
     </section>
-    <section v-bind:class="{ card: true, cardActive: cardCSelected }" v-on:click="selectCard('C')">
+    <section
+      class="card"
+      v-bind:class="{ cardActive: cardCSelected }"
+      v-on:click="selectCard('C')"
+    >
       <h3>Counting to 37</h3>
       <button v-on:click="add(5)">Add 5</button>
       <button v-on:click="add(1)">Add 1</button>
@@ -104,17 +113,11 @@ export default {
     selectCard(card) {
       console.log(`card ${card} selected`);
       if (card === "A") {
-        this.cardASelected == false
-          ? (this.cardASelected = true)
-          : (this.cardASelected = false);
+        this.cardASelected = !this.cardASelected;
       } else if (card === "B") {
-        this.cardBSelected == false
-          ? (this.cardBSelected = true)
-          : (this.cardBSelected = false);
+        this.cardBSelected = !this.cardBSelected;
       } else {
-        this.cardCSelected == false
-          ? (this.cardCSelected = true)
-          : (this.cardCSelected = false);
+        this.cardCSelected = !this.cardCSelected;
       }
     },
   },
