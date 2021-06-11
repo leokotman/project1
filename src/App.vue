@@ -53,8 +53,8 @@
       <button v-on:click="toggleVisibility">Toggle Paragraph</button>
 
       <!-- 3) Add dynamic inline styling to the below paragraph and let the user enter a background-color -->
-      <input type="text" />
-      <p>Style me inline!</p>
+      <input type="text" v-model="inlineInputColor"/>
+      <p v-bind:style="{backgroundColor: inlineInputColor}">Paint me inline!</p>
     </section>
   </div>
 </template>
@@ -80,6 +80,7 @@ export default {
       user1style: false,
       user2style: false,
       paragrInvisibility: false,
+      inlineInputColor: "",
     };
   },
   computed: {
