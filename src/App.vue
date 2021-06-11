@@ -44,6 +44,18 @@
       <button v-on:click="reset">Reset</button>
       <p>Result: {{ result }}</p>
     </section>
+    <section class="card">
+      <p>You can style the paragraph, typing "user1" or "user2" below:</p>
+      <input type="text" v-model="paragrStyle" />
+      <p v-bind:class="paragrClasses">
+        Style me!
+      </p>
+      <button v-on:click="toggleVisibility">Toggle Paragraph</button>
+
+      <!-- 3) Add dynamic inline styling to the below paragraph and let the user enter a background-color -->
+      <input type="text" />
+      <p>Style me inline!</p>
+    </section>
   </div>
 </template>
 
@@ -64,6 +76,10 @@ export default {
       cardASelected: false,
       cardBSelected: false,
       cardCSelected: false,
+      paragrStyle: "",
+      user1style: false,
+      user2style: false,
+      paragrInvisibility: false,
     };
   },
   computed: {
@@ -83,6 +99,14 @@ export default {
         return this.resultNum;
       }
     },
+    paragrClasses() {
+      return {
+        user1: this.user1style,
+        user2: this.user2style,
+        hidden: this.paragrInvisibility,
+        visible: !this.paragrInvisibility,
+      };
+    },
   },
   watch: {
     // will work any time 'result' output changes
@@ -91,6 +115,16 @@ export default {
       setTimeout(function() {
         objThis.resultNum = 0;
       }, 5000);
+    },
+    paragrStyle() {
+      const objThis = this;
+      if (objThis.paragrStyle == "user1") {
+        return (objThis.user1style = true), (objThis.user2style = false);
+      } else if (objThis.paragrStyle == "user2") {
+        return (objThis.user2style = true), (objThis.user1style = false);
+      } else {
+        return (objThis.user2style = false), (objThis.user1style = false);
+      }
     },
   },
   methods: {
@@ -119,6 +153,9 @@ export default {
       } else {
         this.cardCSelected = !this.cardCSelected;
       }
+    },
+    toggleVisibility() {
+      return (this.paragrInvisibility = !this.paragrInvisibility);
     },
   },
 };
@@ -167,5 +204,21 @@ h2 {
   background-color: rgb(45, 202, 160);
   min-height: 1rem;
   border-radius: 10px;
+}
+
+.user1 {
+  background-color: blue;
+  color: white;
+}
+.user2 {
+  background-color: purple;
+  color: white;
+}
+
+.visible {
+  display: block;
+}
+.hidden {
+  display: none;
 }
 </style>
